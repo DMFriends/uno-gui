@@ -9,7 +9,7 @@ package application;
  * - Special cards: "W" for Wild, "P4" for Plus Four Wild
  */
 public class Card {
-    private int card;
+    private final int card;
     private String chosenColor;
 
     public static String[] cards = {
@@ -45,7 +45,7 @@ public class Card {
      * @param c The card string to find
      * @return The index of the card, or -1 if not found
      */
-    public int findIndex(String c) {
+    private int findIndex(String c) {
         for (int i = 0; i < cards.length; i++) {
             if (c.equals(cards[i])) {
                 return i;
@@ -84,16 +84,12 @@ public class Card {
         if (cardStr.startsWith("P"))
             return 14;
         String suffix = cardStr.substring(1);
-        switch (suffix) {
-            case "R":
-                return 10;
-            case "S":
-                return 11;
-            case "P":
-                return 12;
-            default:
-                return Integer.parseInt(suffix);
-        }
+        return switch (suffix) {
+            case "R" -> 10;
+            case "S" -> 11;
+            case "P" -> 12;
+            default -> Integer.parseInt(suffix);
+        };
     }
 
     /**
@@ -150,6 +146,7 @@ public class Card {
      *
      * @return The card string (e.g., "R5", "GS", "W", "P4")
      */
+    @Override
     public String toString() {
         if (card < 0 || card >= cards.length) {
             return "";
@@ -191,23 +188,13 @@ public class Card {
         String color = getColor();
         String colorCode;
 
-        switch (color) {
-            case "G":
-                colorCode = ConsoleColors.GREEN;
-                break;
-            case "R":
-                colorCode = ConsoleColors.RED;
-                break;
-            case "B":
-                colorCode = ConsoleColors.BLUE;
-                break;
-            case "Y":
-                colorCode = ConsoleColors.YELLOW;
-                break;
-            default:
-                colorCode = ConsoleColors.WHITE;
-                break;
-        }
+        colorCode = switch (color) {
+            case "G" -> ConsoleColors.GREEN;
+            case "R" -> ConsoleColors.RED;
+            case "B" -> ConsoleColors.BLUE;
+            case "Y" -> ConsoleColors.YELLOW;
+            default -> ConsoleColors.WHITE;
+        };
 
         return ConsoleColors.colorize(cardStr, colorCode);
     }

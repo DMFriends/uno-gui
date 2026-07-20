@@ -7,8 +7,8 @@ import java.util.ArrayList;
  * Maintains player identity, hand of cards, and game state.
  */
 public class Player {
-	private Hand hand;
-	private int playerID;
+	private final Hand hand;
+	private final int playerID;
 	private String playerName;
 
 	/**
