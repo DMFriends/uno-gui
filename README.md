@@ -22,3 +22,9 @@ published. The release workflow produces:
 - macOS: `.dmg`
 
 You can download those packages from the [latest release](https://github.com/DMFriends/uno-gui/releases/latest). You may need to manually uninstall previous versions.
+
+## Credits
+
+The original, terminal-based version of this project can be found [here](https://github.com/Cattn/JUno).
+
+Many thanks to [@Cattn](https://github.com/Cattn) for the work on the original version.
