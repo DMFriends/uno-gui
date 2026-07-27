@@ -90,22 +90,4 @@ public class Player {
 		hand.remove(c);
 	}
 
-	/**
-	 * Searches for a card in the player's hand by card string.
-	 *
-	 * @param card The card string to find (e.g., "R5", "GS")
-	 * @return The Card object if found, null otherwise
-	 */
-	public Card find(String card) {
-		return hand.find(card);
-	}
-
-	/**
-	 * Gets a string representation of the player's hand.
-	 *
-	 * @return The hand as a formatted string with colored cards
-	 */
-	public String handToString() {
-		return hand.toString();
-	}
 }

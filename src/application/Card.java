@@ -154,48 +154,4 @@ public class Card {
         return cards[card];
     }
 
-    /**
-     * Returns the display string for this card, accounting for user-chosen colors
-     * on wild cards.
-     *
-     * @return The display string (e.g., "R5", "WG" for wild with green, "PY" for
-     *         plus four with yellow)
-     */
-    public String toDisplayString() {
-        if (card < 0 || card >= cards.length) {
-            return "";
-        }
-        if (isWild() && chosenColor != null) {
-            if (isPlusFour()) {
-                return "P" + chosenColor;
-            }
-            return "W" + chosenColor;
-        }
-        return cards[card];
-    }
-
-    /**
-     * Returns a colored console representation of this card.
-     * The card text is colorized based on the card's color using ANSI escape codes.
-     *
-     * @return The colored card string for console output
-     */
-    public String toColoredString() {
-        if (card < 0 || card >= cards.length) {
-            return "";
-        }
-        String cardStr = toDisplayString();
-        String color = getColor();
-        String colorCode;
-
-        colorCode = switch (color) {
-            case "G" -> ConsoleColors.GREEN;
-            case "R" -> ConsoleColors.RED;
-            case "B" -> ConsoleColors.BLUE;
-            case "Y" -> ConsoleColors.YELLOW;
-            default -> ConsoleColors.WHITE;
-        };
-
-        return ConsoleColors.colorize(cardStr, colorCode);
-    }
 }

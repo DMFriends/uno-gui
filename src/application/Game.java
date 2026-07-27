@@ -2,7 +2,6 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 
 /**
  * Manages the game state and rules for a game of Uno.
@@ -16,8 +15,7 @@ public class Game {
     private Integer currentPlayerIndex;
     private boolean isReversed;
     private Card topCard;
-    private boolean isOver;
-    private Deck deck;
+    private final Deck deck;
 
     /**
      * Creates a new game instance with the given players.
@@ -29,7 +27,6 @@ public class Game {
         this.deck = deck;
         this.currentPlayerIndex = 0;
         this.isReversed = false;
-        this.isOver = false;
     }
 
     /**
@@ -41,7 +38,6 @@ public class Game {
      */
     public void startGame(ArrayList<Player> players) {
         this.players = players;
-        this.isOver = false;
         for (Player player : players) {
             deck.dealCards(player);
         }
@@ -83,9 +79,9 @@ public class Game {
             return drawn;
         }
 
-        for (int i = 0; i < Card.cards.length; i++) {
-            if (topCard == null || !Card.cards[i].equals(topCard.toString())) {
-                deck.add(new Card(Card.cards[i]));
+        for (String card : Card.cards) {
+            if (topCard == null || !card.equals(topCard.toString())) {
+                deck.add(new Card(card));
                 break;
             }
         }
@@ -143,21 +139,6 @@ public class Game {
     }
 
     /**
-     * Adjusts the current player index to ensure it remains within valid bounds.
-     * Called when the player list is modified (e.g., when a player wins).
-     */
-    public void normalizeCurrentPlayerIndex() {
-        if (this.players.isEmpty()) {
-            return;
-        }
-        if (this.currentPlayerIndex >= this.players.size()) {
-            this.currentPlayerIndex = 0;
-        } else if (this.currentPlayerIndex < 0) {
-            this.currentPlayerIndex = this.players.size() - 1;
-        }
-    }
-
-    /**
      * Determines if a card can be legally played on the current top card.
      * A move is valid if: the card is wild, or it matches the top card's color or
      * value.
@@ -203,23 +184,21 @@ public class Game {
     }
 
     /**
-     * Processes the effects of an action card.
-     * Handles Reverse, Skip, Plus Two, Wild, and Plus Four cards.
-     * Prompts for color selection on wild cards.
+     * Processes the effects of a card, applying the color already chosen for a
+     * wild card (for example, by the color picker).
      *
-     * @param c The action card to process
-     * @param s Scanner for user input (color selection for wild cards)
+     * @param c           The card to process
+     * @param chosenColor The color to apply to wild cards (R, G, B, or Y); ignored
+     *                    for non-wild cards
      */
-    public void checkActionCard(Card c, Scanner s) {
+    public void applyCard(Card c, String chosenColor) {
         String cardStr = c.toString();
         if (c.isWild()) {
             if (c.isPlusFour()) {
                 this.nextPlayer();
                 this.drawFourCards(this.players.get(this.currentPlayerIndex));
-                System.out.println(this.players.get(this.currentPlayerIndex).getPlayerName()
-                        + " draws 4 cards and skips their turn!");
             }
-            c.setColor(promptForColor(s));
+            c.setColor(chosenColor);
         } else if (cardStr.endsWith("R")) {
             this.reverse();
         } else if (cardStr.endsWith("S")) {
@@ -227,47 +206,8 @@ public class Game {
         } else if (cardStr.endsWith("P")) {
             this.nextPlayer();
             this.drawTwoCards(this.players.get(this.currentPlayerIndex));
-            System.out.println(
-                    this.players.get(this.currentPlayerIndex).getPlayerName() + " draws 2 cards and skips their turn!");
         }
         this.setTopCard(c);
-    }
-
-    /**
-     * Prompts the player to choose a color for a wild card.
-     * Validates input and repeats until a valid color is selected.
-     *
-     * @param s Scanner for reading user input
-     * @return The chosen color (R, G, B, or Y)
-     */
-    private String promptForColor(Scanner s) {
-        String color;
-        while (true) {
-            System.out.print("Choose a color (R, G, B, Y): ");
-            color = s.nextLine().trim().toUpperCase();
-            if (color.matches("[RGBY]"))
-                break;
-            System.out.println("Invalid color.");
-        }
-        return color;
-    }
-
-    /**
-     * Checks if the game has ended.
-     * The game is over if there is only one player remaining or the players decide
-     * to end the game after a player has won.
-     *
-     * @return true if the game is over, false otherwise
-     */
-    public boolean isGameOver() {
-        return isOver || players.size() <= 1;
-    }
-
-    /**
-     * Marks the game as over.
-     */
-    public void endGame() {
-        this.isOver = true;
     }
 
     /**
@@ -277,6 +217,15 @@ public class Game {
      */
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    /**
+     * Checks whether play is currently running in reverse order.
+     *
+     * @return true if the direction has been reversed, false otherwise
+     */
+    public boolean isReversed() {
+        return isReversed;
     }
 
     /**

@@ -8,7 +8,7 @@ import java.util.Collections;
  * Manages card drawing and deck replenishment when cards run low.
  */
 public class Deck {
-    private ArrayList<Card> deck = new ArrayList<Card>();
+    private final ArrayList<Card> deck = new ArrayList<>();
 
     /**
      * Creates and initializes a new deck with 3 copies of each card.
@@ -17,8 +17,8 @@ public class Deck {
      */
     public Deck() {
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < Card.cards.length; j++) {
-                deck.add(new Card(Card.cards[j]));
+            for (String card : Card.cards) {
+                deck.add(new Card(card));
             }
         }
 
@@ -52,6 +52,15 @@ public class Deck {
 
             p.getCards().add(c);
         }
+    }
+
+    /**
+     * Gets the number of cards left in the deck.
+     *
+     * @return The deck size
+     */
+    public int size() {
+        return deck.size();
     }
 
     /**

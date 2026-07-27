@@ -8,7 +8,7 @@ import java.util.Collections;
  * Manages card collection including adding, removing, and searching for cards.
  */
 public class Hand {
-	private ArrayList<Card> playerCards = new ArrayList<Card>();
+	private final ArrayList<Card> playerCards = new ArrayList<>();
 
 	/**
 	 * Creates an empty hand.
@@ -36,22 +36,6 @@ public class Hand {
 	}
 
 	/**
-	 * Searches for a card in the hand by its string representation.
-	 *
-	 * @param card The card string to find (e.g., "R5", "GS")
-	 * @return The Card object if found, null otherwise
-	 */
-	public Card find(String card) {
-		for (Card c : playerCards) {
-			if (c.toString().equals(card)) {
-				return c;
-			}
-		}
-
-		return null;
-	}
-
-	/**
 	 * Gets the number of cards in the hand.
 	 *
 	 * @return The size of the hand
@@ -76,7 +60,7 @@ public class Hand {
 	 * @return A new sorted list of card strings
 	 */
 	public ArrayList<String> sort() {
-		ArrayList<String> sorted = new ArrayList<String>();
+		ArrayList<String> sorted = new ArrayList<>();
 
 		for (int i = 0; i < size(); i++) {
 			sorted.add(playerCards.get(i).toString());
@@ -85,22 +69,5 @@ public class Hand {
 		Collections.sort(sorted);
 
 		return sorted;
-	}
-
-	/**
-	 * Returns a string representation of the hand with colored card symbols.
-	 *
-	 * @return A bracketed list of colored card strings
-	 */
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[");
-		for (int i = 0; i < playerCards.size(); i++) {
-			if (i > 0)
-				sb.append(", ");
-			sb.append(playerCards.get(i).toColoredString());
-		}
-		sb.append("]");
-		return sb.toString();
 	}
 }
