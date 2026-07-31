@@ -107,7 +107,7 @@ JPACKAGE_ARGS=(
   --app-version "$VERSION"
   --dest dist
   --module-path "$JAVAFX_JMODS_DIR"
-  --add-modules java.desktop,java.net.URL,javafx.controls
+  --add-modules java.desktop,javafx.controls
   "${JPACKAGE_PREVIEW_ARGS[@]}"
   "${ICON_ARGS[@]}"
 )
