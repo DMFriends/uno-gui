@@ -180,7 +180,7 @@ public class Main extends Application {
         Platform.runLater(this::fitToWorkArea);
     }
 
-     private Parent createStartScreen()
+    private Parent createStartScreen()
     {
         BorderPane root = new BorderPane();
         root.getStyleClass().add("app-shell");
