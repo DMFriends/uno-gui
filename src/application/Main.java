@@ -90,7 +90,6 @@ public class Main extends Application {
 	}
 
 	@Override
-    @SuppressWarnings("CallToPrintStackTrace")
 	public void start(Stage stage) {
 		try {
 			primaryStage = stage;
