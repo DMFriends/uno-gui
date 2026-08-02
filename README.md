@@ -27,4 +27,4 @@ You can download those packages from the [latest release](https://github.com/DMF
 
 The original, terminal-based version of this project can be found [here](https://github.com/Cattn/JUno).
 
-Many thanks to [@Cattn](https://github.com/Cattn) for the work on the original version.
+Many thanks to [@Cattn](https://github.com/Cattn) for the work on the original version and to [@Boris098](https://github.com/Boris098) for collaborating on this version with me.
